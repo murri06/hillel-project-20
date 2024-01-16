@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LoginFormRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -9,13 +10,9 @@ use Illuminate\Support\Facades\Auth;
 class AuthController extends Controller
 {
 
-    public function login(Request $request): RedirectResponse
+    public function login(LoginFormRequest $request): RedirectResponse
     {
-        $valid = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required'],
-
-        ]);
+        $valid = $request->validated();
 
         if (Auth::guard('web')->attempt($valid)) {
             return to_route('home');
@@ -23,7 +20,7 @@ class AuthController extends Controller
         return back()->withErrors(['password' => 'Wrong email or password']);
     }
 
-    public function logout(Request $request)
+    public function logout(Request $request) : RedirectResponse
     {
         Auth::guard('web')->logout();
         $request->session()->regenerate();

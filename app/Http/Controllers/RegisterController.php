@@ -2,22 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RegisterFormRequest;
 use App\Models\User;
-use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 class RegisterController extends Controller
 {
-    public function register(Request $request)
+    public function register(RegisterFormRequest $request) : RedirectResponse
     {
 
-        $valid = $request->validate([
-            'name' => ['required', 'string', 'min:3'],
-            'email' => ['required', 'email', 'unique:App\Models\User,email'],
-            'password' => ['required', 'min:6', 'confirmed'],
-        ]);
+        $valid = $request->validated();
 
         $user = User::create([
             'name' => $valid['name'],
@@ -31,5 +28,6 @@ class RegisterController extends Controller
             Auth::guard('web')->login($user);
             return to_route('home');
         }
+        return back()->withErrors(['password' => 'Something went wrong, try again']);
     }
 }
