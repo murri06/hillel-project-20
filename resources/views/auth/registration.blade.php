@@ -52,35 +52,14 @@
                                     @enderror
 
                                     <div class="mb-4">
-                                        <label class="form-label" for="repeat">Repeat your password</label>
+                                        <label class="form-label" for="password_confirmation">Repeat your
+                                            password</label>
                                         <div class="form-outline input-group flex-fill mb-0">
                                             <span class="input-group-text"><i class="bi bi-key"></i></span>
-                                            <input type="password" id="repeat" name="repeat" class="form-control"/>
+                                            <input type="password" id="password_confirmation"
+                                                   name="password_confirmation" class="form-control"/>
                                         </div>
                                     </div>
-
-                                    @error('repeat')
-                                    <div class="alert alert-danger">
-                                        {{$message}}
-                                    </div>
-                                    @enderror
-
-                                    <div class="form-check d-flex justify-content-center mb-5">
-                                        <input class="form-check-input me-2" type="checkbox" value=""
-                                               id="check" name="check"/>
-                                        <label class="form-check-label" for="check">
-                                            I agree all statements in <a href="#">Terms of service</a>
-                                        </label>
-                                    </div>
-                                    @if ($errors->any())
-                                        <div class="alert alert-danger">
-                                            <ul>
-                                                @foreach ($errors->all() as $error)
-                                                    <li>{{ $error }}</li>
-                                                @endforeach
-                                            </ul>
-                                        </div>
-                                    @endif
 
                                     <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
                                         <button type="submit" class="btn btn-primary btn-lg">Register</button>

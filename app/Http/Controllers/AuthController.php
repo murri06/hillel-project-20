@@ -22,4 +22,12 @@ class AuthController extends Controller
         }
         return back()->withErrors(['password' => 'Wrong email or password']);
     }
+
+    public function logout(Request $request)
+    {
+        Auth::guard('web')->logout();
+        $request->session()->regenerate();
+
+        return to_route('home');
+    }
 }

@@ -4,18 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 class RegisterController extends Controller
 {
-    public function register( Request $request)
+    public function register(Request $request)
     {
 
         $valid = $request->validate([
             'name' => ['required', 'string', 'min:3'],
             'email' => ['required', 'email', 'unique:App\Models\User,email'],
-            'password' => ['required', 'min:6'],
+            'password' => ['required', 'min:6', 'confirmed'],
         ]);
 
         $user = User::create([
@@ -25,6 +26,10 @@ class RegisterController extends Controller
             'password' => Hash::make($valid['password']),
             'remember_token' => Str::random(10),
         ]);
-        dd($request);
+
+        if ($user) {
+            Auth::guard('web')->login($user);
+            return to_route('home');
+        }
     }
 }
