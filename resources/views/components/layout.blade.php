@@ -23,12 +23,18 @@
                 <li class="nav-item">
                     <a class="nav-link" aria-current="page" href="/">Home</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{route('events_list')}}">Events</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{route('users_list')}}">Users</a>
-                </li>
+                @if(Auth::check())
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('events_list')}}">Events</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('users_list')}}">Users</a>
+                    </li>
+                @else
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('login')}}">Login</a>
+                    </li>
+                @endif
             </ul>
         </div>
     </div>

@@ -62,7 +62,7 @@ class EventController extends Controller
         ]);
     }
 
-    public function editEvent($id, Request $request): RedirectResponse
+    public function editEvent(Request $request, $id): RedirectResponse
     {
         $valid = $request->validate([
             'title' => ['required', 'min:3', 'string'],

@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\{EventController, UserController};
+use App\Http\Controllers\{AuthController, EventController, RegisterController, UserController};
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,15 +16,26 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('home');
+})->name('home');
+
+Route::get('/home', function () {
+    return view('home');
 });
 
-Route::get('/login', function (){
-    return view('login');
-})->name('login');
+Route::group(['middleware' => ['guest']], function () {
+    Route::get('/login', function () {
+        return view('auth.login');
+    })->name('login');
 
-Route::get('/register', function (){
-    return view('registration');
-})->name('register');
+    Route::post('/login', [AuthController::class, 'login']);
+
+    Route::get('/register', function () {
+        return view('auth.registration');
+    })->name('register');
+
+    Route::post('/register', [RegisterController::class, 'register']);
+});
+
 
 Route::group(['prefix' => 'users', 'as' => 'users_', 'middleware' => ['auth']], function () {
     Route::get('/', [UserController::class, 'list'])->name('list');
@@ -43,7 +54,7 @@ Route::group(['prefix' => 'users', 'as' => 'users_', 'middleware' => ['auth']], 
 
     Route::get('/{id}', [UserController::class, 'details'])->name('details');
 
-})->middleware('auth');
+});
 
 
 Route::group(['prefix' => 'events', 'as' => 'events_', 'middleware' => ['auth']], function () {

@@ -54,7 +54,7 @@ class UserController extends Controller
         ]);
     }
 
-    public function editUser($id, Request $request): RedirectResponse
+    public function editUser(Request $request, $id): RedirectResponse
     {
         $user = User::query()->findOrFail($id);
         $valid = $request->validate([
