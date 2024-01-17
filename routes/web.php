@@ -1,6 +1,10 @@
 <?php
 
-use App\Http\Controllers\{AuthController, EventController, RegisterController, UserController};
+use App\Http\Controllers\{AuthController,
+    EventController,
+    FacebookSocialiteController,
+    RegisterController,
+    UserController};
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,6 +36,9 @@ Route::group(['middleware' => ['guest']], function () {
         return view('auth.registration');
     })->name('register');
     Route::post('/register', [RegisterController::class, 'register']);
+
+    Route::get('/auth/facebook', [FacebookSocialiteController::class, 'redirectToFB'])->name('facebook_auth');
+    Route::get('/callback/facebook', [FacebookSocialiteController::class, 'handleCallback']);
 });
 
 Route::group(['middleware' => ['auth']], function () {
@@ -54,7 +61,7 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
 
-    Route::group(['prefix' => 'events', 'as' => 'events_', 'middleware' => ['auth']], function () {
+    Route::group(['prefix' => 'events', 'as' => 'events_'], function () {
 
         Route::get('/', [EventController::class, 'list'])->name('list');
 

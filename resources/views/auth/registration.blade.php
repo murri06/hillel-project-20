@@ -75,7 +75,7 @@
                                     <div class="d-flex justify-content-center mb-5">
                                         <span>
                                             Or you can sign up using
-                                            <a href="#"><i class="bi bi-facebook"></i></a>
+                                            <a href="{{route('facebook_auth')}}"><i class="bi bi-facebook"></i></a>
                                         </span>
                                     </div>
 

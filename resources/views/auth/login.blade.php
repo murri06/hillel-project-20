@@ -17,9 +17,9 @@
                                         </div>
                                     </div>
                                     @error('email')
-                                        <div class="alert alert-danger">
-                                            {{$message}}
-                                        </div>
+                                    <div class="alert alert-danger">
+                                        {{$message}}
+                                    </div>
                                     @enderror
 
                                     <div class="mb-4">
@@ -49,7 +49,7 @@
                                     <div class="d-flex justify-content-center mb-5">
                                         <span>
                                             Or you can sign up using
-                                            <a href="#"><i class="bi bi-facebook"></i></a>
+                                            <a href="{{route('facebook_auth')}}"><i class="bi bi-facebook"></i></a>
                                         </span>
                                     </div>
 
